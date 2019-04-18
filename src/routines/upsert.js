@@ -37,8 +37,8 @@ export default async (
   connection: DatabaseConnectionType,
   tableName: string,
   namedValueBindings: NamedValueBindingsType,
-  inputUniqueConstraintColumnNames: $ReadOnlyArray<string> = null,
-  inputConfiguration: UpsertConfigurationType = null
+  inputUniqueConstraintColumnNames: $ReadOnlyArray<string> | null = null,
+  inputConfiguration: UpsertConfigurationType | null = null
 ) => {
   const configuration = {
     ...defaultConfiguration,

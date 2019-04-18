@@ -24,6 +24,8 @@ export default async (
   connection: DatabaseConnectionType,
   tableName: string,
   namedValueBindings: NamedValueBindingsType,
+
+  // eslint-disable-next-line flowtype/no-weak-types
   booleanExpressionValues: Object = null
 ) => {
   const normalizedNamedValueBindings = mapKeys(namedValueBindings, (value, key) => {
@@ -36,6 +38,7 @@ export default async (
     return [columnName];
   }));
 
+  // $FlowFixMe
   const valueList = sql.valueList(Object.values(normalizedNamedValueBindings));
 
   if (booleanExpressionValues) {
@@ -43,6 +46,7 @@ export default async (
       Object
         .entries(booleanExpressionValues)
         .map(([key, value]) => {
+          // $FlowFixMe
           return sql.comparisonPredicate(sql.identifier([key]), '=', value);
         }),
       'AND'

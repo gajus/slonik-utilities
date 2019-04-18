@@ -147,9 +147,6 @@ test('converts named value bindings to snake case (SELECT)', async (t) => {
     },
     [
       'bar_baz'
-    ],
-    [
-      'bar_baz'
     ]
   );
 

@@ -24,8 +24,8 @@ import {
 /**
  * @param connection Instance of Slonik connection.
  * @param {string} tableName Target table name.
- * @param namedValueBindings Object describing the desired column values.
- * @param [booleanExpressionValues] Object describing the boolean expression used to construct WHERE condition.
+ * @param {Object.<string, ValueExpression>} Object describing the desired column values.
+ * @param {Object.<string, EqualPredicate>} [booleanExpressionValues] Object describing the boolean expression used to construct WHERE condition.
  */
 update;
 
@@ -101,7 +101,7 @@ import {
 /**
  * @param connection Instance of Slonik connection.
  * @param {string} tableName Target table name.
- * @param namedValueBindings Object describing the desired column values.
+ * @param {Object.<string, ValueExpression>} namedValueBindings Object describing the desired column values.
  * @param {string[]} [uniqueConstraintColumnNames] Names of columns that describe a unique constraint on the table. Defaults to property names of `namedValueBindings`.
  * @param {Configuration~Upsert} [configuration]
  */
