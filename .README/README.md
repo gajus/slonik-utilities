@@ -14,6 +14,78 @@ Utilities for manipulating data in PostgreSQL database using [Slonik](https://gi
 
 ## Usage
 
+### `update`
+
+```js
+import {
+  update
+} from 'slonik-utilities';
+
+/**
+ * @param connection Instance of Slonik connection.
+ * @param {string} tableName Target table name.
+ * @param namedValueBindings Object describing the desired column values.
+ * @param [booleanExpressionValues] Object describing the boolean expression used to construct WHERE condition.
+ */
+update;
+
+```
+
+Constructs and executes `UPDATE` query.
+
+#### Example: Update all rows
+
+Operation:
+
+```js
+update(
+  connection,
+  'user',
+  {
+    givenName: 'foo'
+  }
+);
+
+```
+
+Is equivalent to:
+
+```sql
+UPDATE "user"
+SET
+  "given_name" = $1;
+
+```
+
+#### Example: Update rows matching a boolean WHERE condition
+
+Operation:
+
+```js
+update(
+  connection,
+  'user',
+  {
+    givenName: 'foo'
+  },
+  {
+    lastName: 'bar'
+  }
+);
+
+```
+
+Is equivalent to:
+
+```sql
+UPDATE "user"
+SET
+  "given_name" = $1
+WHERE
+  "last_name" = $2;
+
+```
+
 ### `upsert`
 
 ```js
@@ -172,5 +244,35 @@ DO UPDATE SET
   "family_name" = EXCLUDED."family_name",
   "given_name" = EXCLUDED."given_name"
 RETURNING "id"
+
+```
+
+### Example: SQL tags as values
+
+Named value binding values can be SQL tokens, e.g.
+
+```js
+upsert(
+  connection,
+  'user',
+  {
+    emailAddress: 'gajus@gajus.com',
+    createdAt: sql.raw('to_timestamp($1)', [1555595070])
+  }
+);
+
+```
+
+Given the above example, queries equivalent to the following will be evaluated:
+
+```sql
+SELECT "id"
+FROM "user"
+WHERE (
+  "email_address" = $1 AND
+  "created_at" = to_timestamp($2)
+);
+
+-- ...
 
 ```

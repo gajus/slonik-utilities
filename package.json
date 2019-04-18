@@ -16,7 +16,7 @@
     "lodash": "^4.17.11",
     "roarr": "^2.13.0",
     "serialize-error": "^4.1.0",
-    "slonik": "^16.13.0"
+    "slonik": "^16.14.0"
   },
   "description": "Utilities for manipulating data in PostgreSQL database using Slonik.",
   "devDependencies": {
