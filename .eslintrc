@@ -1,0 +1,18 @@
+{
+  "extends": [
+    "canonical",
+    "canonical/flowtype"
+  ],
+  "root": true,
+  "rules": {
+    "no-continue": 0,
+    "no-duplicate-imports": 0,
+    "no-restricted-syntax": 0,
+    "no-unused-expressions": [
+      2,
+      {
+        "allowTaggedTemplates": true
+      }
+    ]
+  }
+}
