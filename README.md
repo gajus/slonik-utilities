@@ -17,7 +17,6 @@ Utilities for manipulating data in PostgreSQL database using [Slonik](https://gi
     * [Usage](#slonik-utilities-usage)
         * [`update`](#slonik-utilities-usage-update)
         * [`upsert`](#slonik-utilities-usage-upsert)
-        * [Example: SQL tags as values](#slonik-utilities-usage-example-sql-tags-as-values)
 
 
 <a name="slonik-utilities-usage"></a>
@@ -262,8 +261,8 @@ RETURNING "id"
 
 ```
 
-<a name="slonik-utilities-usage-example-sql-tags-as-values"></a>
-### Example: SQL tags as values
+<a name="slonik-utilities-usage-upsert-example-sql-tags-as-values"></a>
+#### Example: SQL tags as values
 
 Named value binding values can be SQL tokens, e.g.
 
