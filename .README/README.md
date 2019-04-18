@@ -247,7 +247,7 @@ RETURNING "id"
 
 ```
 
-### Example: SQL tags as values
+#### Example: SQL tags as values
 
 Named value binding values can be SQL tokens, e.g.
 
