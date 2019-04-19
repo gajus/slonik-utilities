@@ -7,17 +7,9 @@ import type {
   DatabaseConnectionType,
   ValueExpressionType
 } from 'slonik';
-import {
-  mapKeys,
-  snakeCase
-} from 'lodash';
 
 type NamedValueBindingsType = {
   +[key: string]: ValueExpressionType
-};
-
-const normalizeNamedValueBindingName = (name: string): string => {
-  return snakeCase(name);
 };
 
 export default async (
@@ -28,18 +20,7 @@ export default async (
   // eslint-disable-next-line flowtype/no-weak-types
   booleanExpressionValues: Object = null
 ) => {
-  const normalizedNamedValueBindings = mapKeys(namedValueBindings, (value, key) => {
-    return normalizeNamedValueBindingName(key);
-  });
-
-  const columnNames = Object.keys(normalizedNamedValueBindings);
-
-  const identifierList = sql.identifierList(columnNames.map((columnName) => {
-    return [columnName];
-  }));
-
-  // $FlowFixMe
-  const valueList = sql.valueList(Object.values(normalizedNamedValueBindings));
+  const assignmentList = sql.assignmentList(namedValueBindings);
 
   if (booleanExpressionValues) {
     const booleanExpression = sql.booleanExpression(
@@ -54,13 +35,13 @@ export default async (
 
     await connection.query(sql`
       UPDATE ${sql.identifier([tableName])}
-      SET (${identifierList}) = (${valueList})
+      SET ${assignmentList}
       WHERE ${booleanExpression}
     `);
   } else {
     await connection.query(sql`
       UPDATE ${sql.identifier([tableName])}
-      SET (${identifierList}) = (${valueList})
+      SET ${assignmentList}
     `);
   }
 };
