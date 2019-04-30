@@ -104,10 +104,21 @@ export default async (
   ]);
 
   const whereClause = sql.booleanExpression(targetColumnNames.map((targetColumnName) => {
+    const value = normalizedNamedValueBindings[normalizeNamedValueBindingName(targetColumnName)];
+
+    if (value === null) {
+      return sql.raw(
+        '$1 IS NULL',
+        [
+          sql.identifier([targetColumnName])
+        ]
+      );
+    }
+
     return sql.comparisonPredicate(
       sql.identifier([targetColumnName]),
       '=',
-      normalizedNamedValueBindings[normalizeNamedValueBindingName(targetColumnName)]
+      value
     );
   }), 'AND');
 

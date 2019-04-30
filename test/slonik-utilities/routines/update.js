@@ -29,9 +29,9 @@ test('executes UPDATE query without WHERE condition (single column)', async (t) 
     }
   );
 
-  t.true(connection.query.callCount === 1);
+  t.assert(connection.query.callCount === 1);
 
-  t.true(normalizeQuery(connection.query.firstCall.args[0].sql) === 'UPDATE "foo" SET "bar" = $1');
+  t.assert(normalizeQuery(connection.query.firstCall.args[0].sql) === 'UPDATE "foo" SET "bar" = $1');
   t.deepEqual(connection.query.firstCall.args[0].values, [
     'baz'
   ]);
@@ -50,9 +50,9 @@ test('executes UPDATE query without WHERE condition (multiple columns)', async (
     }
   );
 
-  t.true(connection.query.callCount === 1);
+  t.assert(connection.query.callCount === 1);
 
-  t.true(normalizeQuery(connection.query.firstCall.args[0].sql) === 'UPDATE "foo" SET "bar_0" = $1, "bar_1" = $2, "bar_2" = $3');
+  t.assert(normalizeQuery(connection.query.firstCall.args[0].sql) === 'UPDATE "foo" SET "bar_0" = $1, "bar_1" = $2, "bar_2" = $3');
   t.deepEqual(connection.query.firstCall.args[0].values, [
     'baz0',
     'baz1',
@@ -73,9 +73,9 @@ test('executes UPDATE query without WHERE condition (SQL token)', async (t) => {
     }
   );
 
-  t.true(connection.query.callCount === 1);
+  t.assert(connection.query.callCount === 1);
 
-  t.true(normalizeQuery(connection.query.firstCall.args[0].sql) === 'UPDATE "foo" SET "bar_0" = $1, "bar_1" = to_timestamp($2), "bar_2" = $3');
+  t.assert(normalizeQuery(connection.query.firstCall.args[0].sql) === 'UPDATE "foo" SET "bar_0" = $1, "bar_1" = to_timestamp($2), "bar_2" = $3');
   t.deepEqual(connection.query.firstCall.args[0].values, [
     'baz0',
     'baz1',
@@ -97,9 +97,9 @@ test('executes UPDATE query with WHERE condition (AND boolean expression short-h
     }
   );
 
-  t.true(connection.query.callCount === 1);
+  t.assert(connection.query.callCount === 1);
 
-  t.true(normalizeQuery(connection.query.firstCall.args[0].sql) === 'UPDATE "foo" SET "bar" = $1 WHERE ("qux" = $2)');
+  t.assert(normalizeQuery(connection.query.firstCall.args[0].sql) === 'UPDATE "foo" SET "bar" = $1 WHERE ("qux" = $2)');
   t.deepEqual(connection.query.firstCall.args[0].values, [
     'baz',
     'quux'
