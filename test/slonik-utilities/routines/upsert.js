@@ -43,6 +43,24 @@ test('first attempts SELECT using named value bindings', async (t) => {
   ]);
 });
 
+test('throws an error if named value binding value is undefined', async (t) => {
+  const connection = createConnection();
+
+  await t.throwsAsync(async () => {
+    await upsert(
+      connection,
+      'foo',
+      {
+        // $FlowFixMe
+        bar: undefined
+      },
+      [
+        'bar'
+      ]
+    );
+  }, 'Named value binding values must be defined.');
+});
+
 test('executes INSERT .. DO UPDATE if SELECT returns NULL and update column names are defined', async (t) => {
   const connection = createConnection();
 

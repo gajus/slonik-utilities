@@ -16,6 +16,7 @@ import {
 import {
   escapeIdentifier
 } from '../utilities';
+import Logger from '../Logger';
 
 type NamedValueBindingsType = {
   +[key: string]: ValueExpressionType
@@ -24,6 +25,10 @@ type NamedValueBindingsType = {
 type UpsertConfigurationType = {|
   +identifierName: string
 |};
+
+const log = Logger.child({
+  namespace: 'upsert'
+});
 
 const normalizeNamedValueBindingName = (name: string): string => {
   return snakeCase(name);
@@ -45,13 +50,26 @@ export default async (
     ...inputConfiguration
   };
 
+  const namedValueBindingNamesWithUndefinedValues = [];
   const boundValues = [];
 
   const normalizedNamedValueBindings = mapKeys(namedValueBindings, (value, key) => {
+    if (value === undefined) {
+      namedValueBindingNamesWithUndefinedValues.push(key);
+    }
+
     boundValues.push(value);
 
     return normalizeNamedValueBindingName(key);
   });
+
+  if (namedValueBindingNamesWithUndefinedValues.length > 0) {
+    log.warn({
+      namedValueBindingNamesWithUndefinedValues
+    }, 'named value bindings with undefined values');
+
+    throw new Error('Named value binding values must be defined.');
+  }
 
   const columnNames = Object.keys(normalizedNamedValueBindings);
 
