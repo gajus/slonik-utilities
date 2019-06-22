@@ -1,8 +1,8 @@
-### `update`
+### `updateDistinct`
 
 ```js
 import {
-  update
+  updateDistinct
 } from 'slonik-utilities';
 
 /**
@@ -11,11 +11,11 @@ import {
  * @param {Object.<string, ValueExpression>} namedValueBindings Object describing the desired column values.
  * @param {Object.<string, EqualPredicate>} [booleanExpressionValues] Object describing the boolean expression used to construct WHERE condition.
  */
-update;
+updateDistinct;
 
 ```
 
-Constructs and executes `UPDATE` query.
+Constructs and executes `UPDATE` query matching only rows with distinct values.
 
 #### Example: Update all rows
 
@@ -37,7 +37,9 @@ Is equivalent to:
 ```sql
 UPDATE "user"
 SET
-  "given_name" = $1;
+  "given_name" = $1
+WHERE
+  "given_name" IS DISTINCT FROM $1;
 
 ```
 
@@ -66,6 +68,7 @@ UPDATE "user"
 SET
   "given_name" = $1
 WHERE
-  "last_name" = $2;
+  "last_name" = $2 AND
+  "given_name" IS DISTINCT FROM $1;
 
 ```

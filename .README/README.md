@@ -15,4 +15,7 @@ Utilities for manipulating data in PostgreSQL database using [Slonik](https://gi
 ## Usage
 
 {"gitdown": "include", "file": "./UPDATE.md"}
+
+{"gitdown": "include", "file": "./UPDATE_DISTINCT.md"}
+
 {"gitdown": "include", "file": "./UPSERT.md"}
