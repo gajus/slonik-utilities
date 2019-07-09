@@ -25,16 +25,16 @@
     "lodash": "^4.17.11",
     "roarr": "^2.13.2",
     "serialize-error": "^4.1.0",
-    "slonik": "^16.21.3"
+    "slonik": "^17.1.1"
   },
   "description": "Utilities for manipulating data in PostgreSQL database using Slonik.",
   "devDependencies": {
     "@babel/cli": "^7.5.0",
     "@babel/core": "^7.5.0",
     "@babel/plugin-transform-flow-strip-types": "^7.4.4",
-    "@babel/preset-env": "^7.5.0",
+    "@babel/preset-env": "^7.5.2",
     "@babel/register": "^7.4.4",
-    "ava": "^2.1.0",
+    "ava": "^2.2.0",
     "babel-plugin-istanbul": "^5.1.4",
     "babel-plugin-transform-export-default-name": "^2.0.4",
     "coveralls": "^3.0.4",
