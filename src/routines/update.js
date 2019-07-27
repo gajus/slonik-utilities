@@ -20,6 +20,10 @@ export default async (
   // eslint-disable-next-line flowtype/no-weak-types
   booleanExpressionValues: Object = null
 ) => {
+  if (Object.keys(namedValueBindings).length === 0) {
+    return;
+  }
+
   const assignmentList = sql.assignmentList(namedValueBindings);
 
   if (booleanExpressionValues) {

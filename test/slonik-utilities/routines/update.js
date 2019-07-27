@@ -18,6 +18,18 @@ const createConnection = () => {
   return connection;
 };
 
+test('does not execute UPDATE query if named value bindings object has no keys', async (t) => {
+  const connection = createConnection();
+
+  await update(
+    connection,
+    'foo',
+    {}
+  );
+
+  t.is(connection.query.callCount, 0);
+});
+
 test('executes UPDATE query without WHERE condition (single column)', async (t) => {
   const connection = createConnection();
 
