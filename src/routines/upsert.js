@@ -1,33 +1,33 @@
 // @flow
 
 import {
-  sql
+  sql,
 } from 'slonik';
 import type {
   DatabaseConnectionType,
-  ValueExpressionType
+  ValueExpressionType,
 } from 'slonik';
 import {
   difference,
   uniq,
   mapKeys,
-  snakeCase
+  snakeCase,
 } from 'lodash';
 import {
-  escapeIdentifier
+  escapeIdentifier,
 } from '../utilities';
 import Logger from '../Logger';
 
 type NamedValueBindingsType = {
-  +[key: string]: ValueExpressionType
+  +[key: string]: ValueExpressionType,
 };
 
 type UpsertConfigurationType = {|
-  +identifierName: string
+  +identifierName: string,
 |};
 
 const log = Logger.child({
-  namespace: 'upsert'
+  namespace: 'upsert',
 });
 
 const normalizeNamedValueBindingName = (name: string): string => {
@@ -35,7 +35,7 @@ const normalizeNamedValueBindingName = (name: string): string => {
 };
 
 const defaultConfiguration = {
-  identifierName: 'id'
+  identifierName: 'id',
 };
 
 export default async (
@@ -47,7 +47,7 @@ export default async (
 ) => {
   const configuration = {
     ...defaultConfiguration,
-    ...inputConfiguration
+    ...inputConfiguration,
   };
 
   const namedValueBindingNamesWithUndefinedValues = [];
@@ -65,7 +65,7 @@ export default async (
 
   if (namedValueBindingNamesWithUndefinedValues.length > 0) {
     log.warn({
-      namedValueBindingNamesWithUndefinedValues
+      namedValueBindingNamesWithUndefinedValues,
     }, 'named value bindings with undefined values');
 
     throw new Error('Named value binding values must be defined.');
@@ -89,7 +89,7 @@ export default async (
     columnNames
       .map((columnName) => {
         return [
-          columnName
+          columnName,
         ];
       })
   );
@@ -99,7 +99,7 @@ export default async (
   const conflictColumnIdentifiers = sql.identifierList(
     uniqueConstraintColumnNames.map((uniqueConstraintColumnName) => {
       return [
-        uniqueConstraintColumnName
+        uniqueConstraintColumnName,
       ];
     })
   );
@@ -118,7 +118,7 @@ export default async (
 
   const targetColumnNames = uniq([
     ...uniqueConstraintColumnNames,
-    ...updateColumnNames
+    ...updateColumnNames,
   ]);
 
   const whereClause = sql.booleanExpression(targetColumnNames.map((targetColumnName) => {
@@ -128,7 +128,7 @@ export default async (
       return sql.raw(
         '$1 IS NULL',
         [
-          sql.identifier([targetColumnName])
+          sql.identifier([targetColumnName]),
         ]
       );
     }

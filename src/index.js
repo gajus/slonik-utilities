@@ -3,5 +3,5 @@
 export {
   update,
   updateDistinct,
-  upsert
+  upsert,
 } from './routines';

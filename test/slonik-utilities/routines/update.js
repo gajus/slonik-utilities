@@ -1,7 +1,7 @@
 // @flow
 
 import {
-  sql
+  sql,
 } from 'slonik';
 import test from 'ava';
 import sinon from 'sinon';
@@ -12,7 +12,7 @@ const createConnection = () => {
   const query = sinon.stub();
 
   const connection = {
-    query
+    query,
   };
 
   return connection;
@@ -25,7 +25,7 @@ test('executes UPDATE query without WHERE condition (single column)', async (t) 
     connection,
     'foo',
     {
-      bar: 'baz'
+      bar: 'baz',
     }
   );
 
@@ -33,7 +33,7 @@ test('executes UPDATE query without WHERE condition (single column)', async (t) 
 
   t.is(normalizeQuery(connection.query.firstCall.args[0].sql), 'UPDATE "foo" SET "bar" = $1');
   t.deepEqual(connection.query.firstCall.args[0].values, [
-    'baz'
+    'baz',
   ]);
 });
 
@@ -46,7 +46,7 @@ test('executes UPDATE query without WHERE condition (multiple columns)', async (
     {
       bar0: 'baz0',
       bar1: 'baz1',
-      bar2: 'baz2'
+      bar2: 'baz2',
     }
   );
 
@@ -56,7 +56,7 @@ test('executes UPDATE query without WHERE condition (multiple columns)', async (
   t.deepEqual(connection.query.firstCall.args[0].values, [
     'baz0',
     'baz1',
-    'baz2'
+    'baz2',
   ]);
 });
 
@@ -69,7 +69,7 @@ test('executes UPDATE query without WHERE condition (SQL token)', async (t) => {
     {
       bar0: 'baz0',
       bar1: sql.raw('to_timestamp($1)', ['baz1']),
-      bar2: 'baz2'
+      bar2: 'baz2',
     }
   );
 
@@ -79,7 +79,7 @@ test('executes UPDATE query without WHERE condition (SQL token)', async (t) => {
   t.deepEqual(connection.query.firstCall.args[0].values, [
     'baz0',
     'baz1',
-    'baz2'
+    'baz2',
   ]);
 });
 
@@ -90,10 +90,10 @@ test('executes UPDATE query with WHERE condition (AND boolean expression short-h
     connection,
     'foo',
     {
-      bar: 'baz'
+      bar: 'baz',
     },
     {
-      qux: 'quux'
+      qux: 'quux',
     }
   );
 
@@ -102,6 +102,6 @@ test('executes UPDATE query with WHERE condition (AND boolean expression short-h
   t.is(normalizeQuery(connection.query.firstCall.args[0].sql), 'UPDATE "foo" SET "bar" = $1 WHERE ("qux" = $2)');
   t.deepEqual(connection.query.firstCall.args[0].values, [
     'baz',
-    'quux'
+    'quux',
   ]);
 });

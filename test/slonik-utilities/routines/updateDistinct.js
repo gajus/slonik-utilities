@@ -1,7 +1,7 @@
 // @flow
 
 import {
-  sql
+  sql,
 } from 'slonik';
 import test from 'ava';
 import sinon from 'sinon';
@@ -12,7 +12,7 @@ const createConnection = () => {
   const query = sinon.stub();
 
   const connection = {
-    query
+    query,
   };
 
   return connection;
@@ -25,7 +25,7 @@ test('executes UPDATE query without WHERE condition (single column)', async (t) 
     connection,
     'foo',
     {
-      bar: 'baz'
+      bar: 'baz',
     }
   );
 
@@ -34,7 +34,7 @@ test('executes UPDATE query without WHERE condition (single column)', async (t) 
   t.is(normalizeQuery(connection.query.firstCall.args[0].sql), 'UPDATE "foo" SET "bar" = $1 WHERE ("bar" IS DISTINCT FROM $2)');
   t.deepEqual(connection.query.firstCall.args[0].values, [
     'baz',
-    'baz'
+    'baz',
   ]);
 });
 
@@ -47,7 +47,7 @@ test('executes UPDATE query without WHERE condition (multiple columns)', async (
     {
       bar0: 'baz0',
       bar1: 'baz1',
-      bar2: 'baz2'
+      bar2: 'baz2',
     }
   );
 
@@ -60,7 +60,7 @@ test('executes UPDATE query without WHERE condition (multiple columns)', async (
     'baz2',
     'baz0',
     'baz1',
-    'baz2'
+    'baz2',
   ]);
 });
 
@@ -73,7 +73,7 @@ test('executes UPDATE query without WHERE condition (SQL token)', async (t) => {
     {
       bar0: 'baz0',
       bar1: sql.raw('to_timestamp($1)', ['baz1']),
-      bar2: 'baz2'
+      bar2: 'baz2',
     }
   );
 
@@ -86,7 +86,7 @@ test('executes UPDATE query without WHERE condition (SQL token)', async (t) => {
     'baz2',
     'baz0',
     'baz1',
-    'baz2'
+    'baz2',
   ]);
 });
 
@@ -97,10 +97,10 @@ test('executes UPDATE query with WHERE condition (AND boolean expression short-h
     connection,
     'foo',
     {
-      bar: 'baz'
+      bar: 'baz',
     },
     {
-      qux: 'quux'
+      qux: 'quux',
     }
   );
 
@@ -110,6 +110,6 @@ test('executes UPDATE query with WHERE condition (AND boolean expression short-h
   t.deepEqual(connection.query.firstCall.args[0].values, [
     'baz',
     'baz',
-    'quux'
+    'quux',
   ]);
 });

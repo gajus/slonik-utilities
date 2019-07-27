@@ -3,5 +3,5 @@
 import Logger from 'roarr';
 
 export default Logger.child({
-  package: 'slonik-utilities'
+  package: 'slonik-utilities',
 });

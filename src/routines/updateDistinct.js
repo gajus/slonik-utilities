@@ -2,15 +2,15 @@
 
 import {
   normalizeIdentifier,
-  sql
+  sql,
 } from 'slonik';
 import type {
   DatabaseConnectionType,
-  ValueExpressionType
+  ValueExpressionType,
 } from 'slonik';
 
 type NamedValueBindingsType = {
-  +[key: string]: ValueExpressionType
+  +[key: string]: ValueExpressionType,
 };
 
 export default async (
@@ -45,7 +45,7 @@ export default async (
               return sql.comparisonPredicate(sql.identifier([key]), '=', value);
             }),
           'AND'
-        )
+        ),
       ],
       'AND'
     );
