@@ -30,6 +30,23 @@ test('does not execute UPDATE query if named value bindings object has no keys',
   t.is(connection.query.callCount, 0);
 });
 
+test('does not execute UPDATE query if named value bindings object entirely overlaps with WHERE condition', async (t) => {
+  const connection = createConnection();
+
+  await update(
+    connection,
+    'foo',
+    {
+      id: 1,
+    },
+    {
+      id: 1,
+    }
+  );
+
+  t.is(connection.query.callCount, 0);
+});
+
 test('executes UPDATE query without WHERE condition (single column)', async (t) => {
   const connection = createConnection();
 

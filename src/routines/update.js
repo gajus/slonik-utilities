@@ -1,6 +1,9 @@
 // @flow
 
 import {
+  pickBy,
+} from 'lodash';
+import {
   sql,
 } from 'slonik';
 import type {
@@ -20,13 +23,17 @@ export default async (
   // eslint-disable-next-line flowtype/no-weak-types
   booleanExpressionValues: Object = null
 ) => {
-  if (Object.keys(namedValueBindings).length === 0) {
-    return;
-  }
-
-  const assignmentList = sql.assignmentList(namedValueBindings);
-
   if (booleanExpressionValues) {
+    const nonOverlappingNamedValueBindings = pickBy(namedValueBindings, (value, key) => {
+      return value !== booleanExpressionValues[key];
+    });
+
+    if (Object.keys(nonOverlappingNamedValueBindings).length === 0) {
+      return;
+    }
+
+    const assignmentList = sql.assignmentList(nonOverlappingNamedValueBindings);
+
     const booleanExpression = sql.booleanExpression(
       Object
         .entries(booleanExpressionValues)
@@ -43,6 +50,12 @@ export default async (
       WHERE ${booleanExpression}
     `);
   } else {
+    if (Object.keys(namedValueBindings).length === 0) {
+      return;
+    }
+
+    const assignmentList = sql.assignmentList(namedValueBindings);
+
     await connection.query(sql`
       UPDATE ${sql.identifier([tableName])}
       SET ${assignmentList}
