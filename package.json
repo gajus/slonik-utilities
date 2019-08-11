@@ -19,13 +19,13 @@
     ]
   },
   "dependencies": {
-    "core-js": "^3.1.4",
+    "core-js": "^3.2.0",
     "delay": "^4.3.0",
     "es6-error": "^4.1.1",
     "lodash": "^4.17.15",
-    "roarr": "^2.13.2",
+    "roarr": "^2.13.3",
     "serialize-error": "^4.1.0",
-    "slonik": "^18.2.0"
+    "slonik": "^18.10.0"
   },
   "description": "Utilities for manipulating data in PostgreSQL database using Slonik.",
   "devDependencies": {
@@ -37,16 +37,16 @@
     "ava": "^2.2.0",
     "babel-plugin-istanbul": "^5.2.0",
     "babel-plugin-transform-export-default-name": "^2.0.4",
-    "coveralls": "^3.0.5",
+    "coveralls": "^3.0.6",
     "eslint": "^6.1.0",
-    "eslint-config-canonical": "^17.3.1",
-    "flow-bin": "^0.104.0",
+    "eslint-config-canonical": "^17.3.4",
+    "flow-bin": "^0.105.1",
     "flow-copy-source": "^2.0.7",
     "gitdown": "^3.1.1",
-    "husky": "^3.0.1",
+    "husky": "^3.0.3",
     "nyc": "^14.1.1",
-    "semantic-release": "^15.13.18",
-    "sinon": "^7.3.2"
+    "semantic-release": "^15.13.19",
+    "sinon": "^7.4.1"
   },
   "engines": {
     "node": ">=8.0"
