@@ -1,7 +1,6 @@
 // @flow
 
 import {
-  normalizeIdentifier,
   sql,
 } from 'slonik';
 import type {
@@ -9,6 +8,7 @@ import type {
 } from 'slonik';
 import {
   assignmentList,
+  normalizeIdentifier,
 } from '../utilities';
 import type {
   NamedAssignmentPayloadType,
