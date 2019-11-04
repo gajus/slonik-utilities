@@ -10,6 +10,7 @@ import {
  * @param {string} tableName Target table name.
  * @param {Object.<string, ValueExpression>} namedValueBindings Object describing the desired column values.
  * @param {Object.<string, EqualPredicate>} [booleanExpressionValues] Object describing the boolean expression used to construct WHERE condition.
+ * @returns {UpdateDistinctResultType}
  */
 updateDistinct;
 

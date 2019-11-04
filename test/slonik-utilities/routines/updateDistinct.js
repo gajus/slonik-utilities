@@ -9,7 +9,9 @@ import updateDistinct from '../../../src/routines/updateDistinct';
 import normalizeQuery from '../../helpers/normalizeQuery';
 
 const createConnection = () => {
-  const query = sinon.stub();
+  const query = sinon.stub().returns({
+    rowCount: 0,
+  });
 
   const connection = {
     query,
@@ -17,6 +19,22 @@ const createConnection = () => {
 
   return connection;
 };
+
+test('describes the outcome (rows not updated)', async (t) => {
+  const connection = createConnection();
+
+  const result = await updateDistinct(
+    connection,
+    'foo',
+    {
+      bar: 'baz',
+    },
+  );
+
+  t.deepEqual(result, {
+    rowCount: 0,
+  });
+});
 
 test('executes UPDATE query without WHERE condition (single column)', async (t) => {
   const connection = createConnection();

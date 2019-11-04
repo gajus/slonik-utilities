@@ -9,7 +9,9 @@ import update from '../../../src/routines/update';
 import normalizeQuery from '../../helpers/normalizeQuery';
 
 const createConnection = () => {
-  const query = sinon.stub();
+  const query = sinon.stub().returns({
+    rowCount: 0,
+  });
 
   const connection = {
     query,
@@ -17,6 +19,20 @@ const createConnection = () => {
 
   return connection;
 };
+
+test('describes the outcome (rows not updated)', async (t) => {
+  const connection = createConnection();
+
+  const result = await update(
+    connection,
+    'foo',
+    {},
+  );
+
+  t.deepEqual(result, {
+    rowCount: 0,
+  });
+});
 
 test('does not execute UPDATE query if named value bindings object has no keys', async (t) => {
   const connection = createConnection();

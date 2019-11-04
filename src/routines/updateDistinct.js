@@ -14,6 +14,10 @@ import type {
   NamedAssignmentPayloadType,
 } from '../types';
 
+type UpdateDistinctResultType = {|
+  +rowCount: number,
+|};
+
 export default async (
   connection: DatabaseConnectionType,
   tableName: string,
@@ -21,7 +25,7 @@ export default async (
 
   // eslint-disable-next-line flowtype/no-weak-types
   booleanExpressionValues: Object = null,
-) => {
+): Promise<UpdateDistinctResultType> => {
   let booleanExpression = sql.join(
     Object
       .entries(namedAssignmentPayload)
@@ -50,9 +54,13 @@ export default async (
     );
   }
 
-  await connection.query(sql`
+  const result = await connection.query(sql`
     UPDATE ${sql.identifier([tableName])}
     SET ${assignmentList(namedAssignmentPayload)}
     WHERE ${booleanExpression}
   `);
+
+  return {
+    rowCount: result.rowCount,
+  };
 };

@@ -17,6 +17,10 @@ import type {
   NamedAssignmentPayloadType,
 } from '../types';
 
+type UpdateResultType = {|
+  +rowCount: number,
+|};
+
 export default async (
   connection: DatabaseConnectionType,
   tableName: string,
@@ -24,14 +28,16 @@ export default async (
 
   // eslint-disable-next-line flowtype/no-weak-types
   booleanExpressionValues: Object = null,
-) => {
+): Promise<UpdateResultType> => {
   if (booleanExpressionValues) {
     const nonOverlappingNamedAssignmentBindings = pickBy(namedAssignmentPayload, (value, key) => {
       return value !== booleanExpressionValues[key];
     });
 
     if (Object.keys(nonOverlappingNamedAssignmentBindings).length === 0) {
-      return;
+      return {
+        rowCount: 0,
+      };
     }
 
     const booleanExpression = sql.join(
@@ -44,19 +50,29 @@ export default async (
       sql` AND `,
     );
 
-    await connection.query(sql`
+    const result = await connection.query(sql`
       UPDATE ${sql.identifier([tableName])}
       SET ${assignmentList(nonOverlappingNamedAssignmentBindings)}
       WHERE ${booleanExpression}
     `);
+
+    return {
+      rowCount: result.rowCount,
+    };
   } else {
     if (Object.keys(namedAssignmentPayload).length === 0) {
-      return;
+      return {
+        rowCount: 0,
+      };
     }
 
-    await connection.query(sql`
+    const result = await connection.query(sql`
       UPDATE ${sql.identifier([tableName])}
       SET ${assignmentList(namedAssignmentPayload)}
     `);
+
+    return {
+      rowCount: result.rowCount,
+    };
   }
 };
