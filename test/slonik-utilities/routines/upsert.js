@@ -37,7 +37,7 @@ test('first attempts SELECT using named value bindings', async (t) => {
 
   t.is(connection.query.callCount, 1);
 
-  t.is(normalizeQuery(connection.query.firstCall.args[0].sql), 'SELECT "id" FROM "foo" WHERE ("bar" = $1)');
+  t.is(normalizeQuery(connection.query.firstCall.args[0].sql), 'SELECT "id" FROM "foo" WHERE "bar" = $1');
   t.deepEqual(connection.query.firstCall.args[0].values, [
     'baz',
   ]);
@@ -83,7 +83,7 @@ test('executes INSERT .. DO UPDATE if SELECT returns NULL and update column name
 
   t.is(connection.query.callCount, 2);
 
-  t.is(normalizeQuery(connection.query.secondCall.args[0].sql), 'INSERT INTO "foo" ("bar", "qux") VALUES ($1, $2) ON CONFLICT ("bar") DO UPDATE SET "qux" = EXCLUDED."qux" RETURNING "id"');
+  t.is(normalizeQuery(connection.query.secondCall.args[0].sql), 'INSERT INTO "foo" ("bar", "qux") VALUES ($1, $2) ON CONFLICT ("bar") DO UPDATE SET "qux" = "EXCLUDED"."qux" RETURNING "id"');
   t.deepEqual(connection.query.secondCall.args[0].values, [
     'baz',
     'quux',
@@ -117,7 +117,7 @@ test('executes INSERT .. DO NOTHING followed by SELECT if SELECT returns NULL an
     'baz',
   ]);
 
-  t.is(normalizeQuery(connection.query.thirdCall.args[0].sql), 'SELECT "id" FROM "foo" WHERE ("bar" = $1)');
+  t.is(normalizeQuery(connection.query.thirdCall.args[0].sql), 'SELECT "id" FROM "foo" WHERE "bar" = $1');
   t.deepEqual(connection.query.thirdCall.args[0].values, [
     'baz',
   ]);
@@ -144,7 +144,7 @@ test('uses unique constraint column name values and update column name values to
 
   t.is(connection.query.callCount, 1);
 
-  t.is(normalizeQuery(connection.query.firstCall.args[0].sql), 'SELECT "id" FROM "foo" WHERE ("bar_0" = $1 AND "bar_1" = $2 AND "bar_2" = $3)');
+  t.is(normalizeQuery(connection.query.firstCall.args[0].sql), 'SELECT "id" FROM "foo" WHERE "bar_0" = $1 AND "bar_1" = $2 AND "bar_2" = $3');
   t.deepEqual(connection.query.firstCall.args[0].values, [
     'baz0',
     'baz1',
@@ -170,7 +170,7 @@ test('converts named value bindings to snake case (SELECT)', async (t) => {
 
   t.is(connection.query.callCount, 1);
 
-  t.is(normalizeQuery(connection.query.firstCall.args[0].sql), 'SELECT "id" FROM "foo" WHERE ("bar_baz" = $1)');
+  t.is(normalizeQuery(connection.query.firstCall.args[0].sql), 'SELECT "id" FROM "foo" WHERE "bar_baz" = $1');
   t.deepEqual(connection.query.firstCall.args[0].values, [
     'baz',
   ]);
@@ -196,7 +196,7 @@ test('converts named value bindings to snake case (INSERT)', async (t) => {
 
   t.is(connection.query.callCount, 2);
 
-  t.is(normalizeQuery(connection.query.secondCall.args[0].sql), 'INSERT INTO "foo" ("bar_baz", "qux_quux") VALUES ($1, $2) ON CONFLICT ("bar_baz") DO UPDATE SET "qux_quux" = EXCLUDED."qux_quux" RETURNING "id"');
+  t.is(normalizeQuery(connection.query.secondCall.args[0].sql), 'INSERT INTO "foo" ("bar_baz", "qux_quux") VALUES ($1, $2) ON CONFLICT ("bar_baz") DO UPDATE SET "qux_quux" = "EXCLUDED"."qux_quux" RETURNING "id"');
   t.deepEqual(connection.query.secondCall.args[0].values, [
     'baz',
     'quux',

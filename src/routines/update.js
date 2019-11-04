@@ -8,58 +8,55 @@ import {
 } from 'slonik';
 import type {
   DatabaseConnectionType,
-  ValueExpressionType,
 } from 'slonik';
-
-type NamedValueBindingsType = {
-  +[key: string]: ValueExpressionType,
-  ...,
-};
+import {
+  assignmentList,
+  normalizeIdentifier,
+} from '../utilities';
+import type {
+  NamedAssignmentPayloadType,
+} from '../types';
 
 export default async (
   connection: DatabaseConnectionType,
   tableName: string,
-  namedValueBindings: NamedValueBindingsType,
+  namedAssignmentPayload: NamedAssignmentPayloadType,
 
   // eslint-disable-next-line flowtype/no-weak-types
   booleanExpressionValues: Object = null,
 ) => {
   if (booleanExpressionValues) {
-    const nonOverlappingNamedValueBindings = pickBy(namedValueBindings, (value, key) => {
+    const nonOverlappingNamedAssignmentBindings = pickBy(namedAssignmentPayload, (value, key) => {
       return value !== booleanExpressionValues[key];
     });
 
-    if (Object.keys(nonOverlappingNamedValueBindings).length === 0) {
+    if (Object.keys(nonOverlappingNamedAssignmentBindings).length === 0) {
       return;
     }
 
-    const assignmentList = sql.assignmentList(nonOverlappingNamedValueBindings);
-
-    const booleanExpression = sql.booleanExpression(
+    const booleanExpression = sql.join(
       Object
         .entries(booleanExpressionValues)
         .map(([key, value]) => {
           // $FlowFixMe
-          return sql.comparisonPredicate(sql.identifier([key]), '=', value);
+          return sql`${sql.identifier([normalizeIdentifier(key)])} = ${value}`;
         }),
-      'AND',
+      sql` AND `,
     );
 
     await connection.query(sql`
       UPDATE ${sql.identifier([tableName])}
-      SET ${assignmentList}
+      SET ${assignmentList(nonOverlappingNamedAssignmentBindings)}
       WHERE ${booleanExpression}
     `);
   } else {
-    if (Object.keys(namedValueBindings).length === 0) {
+    if (Object.keys(namedAssignmentPayload).length === 0) {
       return;
     }
 
-    const assignmentList = sql.assignmentList(namedValueBindings);
-
     await connection.query(sql`
       UPDATE ${sql.identifier([tableName])}
-      SET ${assignmentList}
+      SET ${assignmentList(namedAssignmentPayload)}
     `);
   }
 };

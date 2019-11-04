@@ -128,7 +128,7 @@ test('executes UPDATE query with WHERE condition (AND boolean expression short-h
 
   t.is(connection.query.callCount, 1);
 
-  t.is(normalizeQuery(connection.query.firstCall.args[0].sql), 'UPDATE "foo" SET "bar" = $1 WHERE ("qux" = $2)');
+  t.is(normalizeQuery(connection.query.firstCall.args[0].sql), 'UPDATE "foo" SET "bar" = $1 WHERE "qux" = $2');
   t.deepEqual(connection.query.firstCall.args[0].values, [
     'baz',
     'quux',

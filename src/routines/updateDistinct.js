@@ -6,55 +6,53 @@ import {
 } from 'slonik';
 import type {
   DatabaseConnectionType,
-  ValueExpressionType,
 } from 'slonik';
-
-type NamedValueBindingsType = {
-  +[key: string]: ValueExpressionType,
-  ...,
-};
+import {
+  assignmentList,
+} from '../utilities';
+import type {
+  NamedAssignmentPayloadType,
+} from '../types';
 
 export default async (
   connection: DatabaseConnectionType,
   tableName: string,
-  namedValueBindings: NamedValueBindingsType,
+  namedAssignmentPayload: NamedAssignmentPayloadType,
 
   // eslint-disable-next-line flowtype/no-weak-types
   booleanExpressionValues: Object = null,
 ) => {
-  const assignmentList = sql.assignmentList(namedValueBindings);
-
-  let booleanExpression = sql.booleanExpression(
+  let booleanExpression = sql.join(
     Object
-      .entries(namedValueBindings)
+      .entries(namedAssignmentPayload)
       .map(([key, value]) => {
         // $FlowFixMe
-        return sql.raw('$1 IS DISTINCT FROM $2', [sql.identifier([normalizeIdentifier(key)]), value]);
+        return sql`${sql.identifier([normalizeIdentifier(key)])} IS DISTINCT FROM ${value}`;
       }),
-    'OR',
+    sql` OR `,
   );
 
   if (booleanExpressionValues) {
-    booleanExpression = sql.booleanExpression(
+    booleanExpression = sql.join(
       [
         booleanExpression,
-        sql.booleanExpression(
+        sql.join(
           Object
             .entries(booleanExpressionValues)
             .map(([key, value]) => {
               // $FlowFixMe
-              return sql.comparisonPredicate(sql.identifier([key]), '=', value);
+              return sql`${sql.identifier([normalizeIdentifier(key)])} = ${value}`;
             }),
-          'AND',
+          sql` AND `,
         ),
       ],
-      'AND',
+      sql` AND `,
     );
   }
 
   await connection.query(sql`
     UPDATE ${sql.identifier([tableName])}
-    SET ${assignmentList}
+    SET ${assignmentList(namedAssignmentPayload)}
     WHERE ${booleanExpression}
   `);
 };

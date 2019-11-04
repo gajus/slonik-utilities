@@ -13,9 +13,6 @@ import {
   mapKeys,
   snakeCase,
 } from 'lodash';
-import {
-  escapeIdentifier,
-} from '../utilities';
 import Logger from '../Logger';
 
 type NamedValueBindingsType = {
@@ -86,34 +83,30 @@ export default async (
     throw new Error('Named value bindings object must have properties.');
   }
 
-  const columnIdentifiers = sql.identifierList(
+  const columnIdentifiers = sql.join(
     columnNames
       .map((columnName) => {
-        return [
-          columnName,
-        ];
+        return sql.identifier([columnName]);
       }),
+    sql`, `,
   );
 
-  const values = sql.valueList(boundValues);
-
-  const conflictColumnIdentifiers = sql.identifierList(
+  const conflictColumnIdentifiers = sql.join(
     uniqueConstraintColumnNames.map((uniqueConstraintColumnName) => {
-      return [
-        uniqueConstraintColumnName,
-      ];
+      return sql.identifier([uniqueConstraintColumnName]);
     }),
+    sql`, `,
   );
 
   let updateClause;
 
   if (updateColumnNames.length) {
-    updateClause = sql.raw(
+    updateClause = sql.join(
       updateColumnNames
         .map((updateColumnName) => {
-          return escapeIdentifier(updateColumnName) + ' = EXCLUDED.' + escapeIdentifier(updateColumnName);
-        })
-        .join(', '),
+          return sql`${sql.identifier([updateColumnName])} = ${sql.identifier(['EXCLUDED', updateColumnName])}`;
+        }),
+      sql`, `,
     );
   }
 
@@ -122,24 +115,18 @@ export default async (
     ...updateColumnNames,
   ]);
 
-  const whereClause = sql.booleanExpression(targetColumnNames.map((targetColumnName) => {
-    const value = normalizedNamedValueBindings[normalizeNamedValueBindingName(targetColumnName)];
+  const whereClause = sql.join(
+    targetColumnNames.map((targetColumnName) => {
+      const value = normalizedNamedValueBindings[normalizeNamedValueBindingName(targetColumnName)];
 
-    if (value === null) {
-      return sql.raw(
-        '$1 IS NULL',
-        [
-          sql.identifier([targetColumnName]),
-        ],
-      );
-    }
+      if (value === null) {
+        return sql`${sql.identifier([targetColumnName])} IS NULL`;
+      }
 
-    return sql.comparisonPredicate(
-      sql.identifier([targetColumnName]),
-      '=',
-      value,
-    );
-  }), 'AND');
+      return sql`${sql.identifier([targetColumnName])} = ${value}`;
+    }),
+    sql` AND `,
+  );
 
   const selectQuery = sql`
     SELECT ${sql.identifier([configuration.identifierName])}
@@ -159,7 +146,7 @@ export default async (
   if (updateClause) {
     return connection.oneFirst(sql`
       INSERT INTO ${sql.identifier([tableName])} (${columnIdentifiers})
-      VALUES (${values})
+      VALUES (${sql.join(boundValues, sql`, `)})
       ON CONFLICT (${conflictColumnIdentifiers})
       DO UPDATE
       SET
@@ -170,7 +157,7 @@ export default async (
 
   maybeId = await connection.maybeOneFirst(sql`
     INSERT INTO ${sql.identifier([tableName])} (${columnIdentifiers})
-    VALUES (${values})
+    VALUES (${sql.join(boundValues, sql`, `)})
     ON CONFLICT (${conflictColumnIdentifiers})
     DO NOTHING
   `);
