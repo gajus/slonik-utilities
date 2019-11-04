@@ -30,7 +30,7 @@ test('first attempts SELECT using named value bindings', async (t) => {
     },
     [
       'bar',
-    ]
+    ],
   );
 
   t.is(recordId, 1);
@@ -56,7 +56,7 @@ test('throws an error if named value binding value is undefined', async (t) => {
       },
       [
         'bar',
-      ]
+      ],
     );
   }, 'Named value binding values must be defined.');
 });
@@ -76,7 +76,7 @@ test('executes INSERT .. DO UPDATE if SELECT returns NULL and update column name
     },
     [
       'bar',
-    ]
+    ],
   );
 
   t.is(recordId, 1);
@@ -105,7 +105,7 @@ test('executes INSERT .. DO NOTHING followed by SELECT if SELECT returns NULL an
     },
     [
       'bar',
-    ]
+    ],
   );
 
   t.is(recordId, 1);
@@ -139,7 +139,7 @@ test('uses unique constraint column name values and update column name values to
     [
       'bar_0',
       'bar_1',
-    ]
+    ],
   );
 
   t.is(connection.query.callCount, 1);
@@ -165,7 +165,7 @@ test('converts named value bindings to snake case (SELECT)', async (t) => {
     },
     [
       'bar_baz',
-    ]
+    ],
   );
 
   t.is(connection.query.callCount, 1);
@@ -191,7 +191,7 @@ test('converts named value bindings to snake case (INSERT)', async (t) => {
     },
     [
       'bar_baz',
-    ]
+    ],
   );
 
   t.is(connection.query.callCount, 2);
@@ -210,7 +210,7 @@ test('throws if named value bindings object does not have properties', async (t)
     await upsert(
       connection,
       'foo',
-      {}
+      {},
     );
   }, 'Named value bindings object must have properties.');
 });
@@ -227,7 +227,7 @@ test('throws if unique contraint column names contain values not present in name
       },
       [
         'qux',
-      ]
+      ],
     );
   }, 'Unique constraint column names must not contain column names not present in named value bindings.');
 });

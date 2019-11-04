@@ -20,6 +20,7 @@ import Logger from '../Logger';
 
 type NamedValueBindingsType = {
   +[key: string]: ValueExpressionType,
+  ...,
 };
 
 type UpsertConfigurationType = {|
@@ -43,7 +44,7 @@ export default async (
   tableName: string,
   namedValueBindings: NamedValueBindingsType,
   inputUniqueConstraintColumnNames: $ReadOnlyArray<string> | null = null,
-  inputConfiguration: UpsertConfigurationType | null = null
+  inputConfiguration: UpsertConfigurationType | null = null,
 ) => {
   const configuration = {
     ...defaultConfiguration,
@@ -91,7 +92,7 @@ export default async (
         return [
           columnName,
         ];
-      })
+      }),
   );
 
   const values = sql.valueList(boundValues);
@@ -101,7 +102,7 @@ export default async (
       return [
         uniqueConstraintColumnName,
       ];
-    })
+    }),
   );
 
   let updateClause;
@@ -112,7 +113,7 @@ export default async (
         .map((updateColumnName) => {
           return escapeIdentifier(updateColumnName) + ' = EXCLUDED.' + escapeIdentifier(updateColumnName);
         })
-        .join(', ')
+        .join(', '),
     );
   }
 
@@ -129,14 +130,14 @@ export default async (
         '$1 IS NULL',
         [
           sql.identifier([targetColumnName]),
-        ]
+        ],
       );
     }
 
     return sql.comparisonPredicate(
       sql.identifier([targetColumnName]),
       '=',
-      value
+      value,
     );
   }), 'AND');
 

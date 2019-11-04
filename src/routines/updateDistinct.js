@@ -11,6 +11,7 @@ import type {
 
 type NamedValueBindingsType = {
   +[key: string]: ValueExpressionType,
+  ...,
 };
 
 export default async (
@@ -19,7 +20,7 @@ export default async (
   namedValueBindings: NamedValueBindingsType,
 
   // eslint-disable-next-line flowtype/no-weak-types
-  booleanExpressionValues: Object = null
+  booleanExpressionValues: Object = null,
 ) => {
   const assignmentList = sql.assignmentList(namedValueBindings);
 
@@ -30,7 +31,7 @@ export default async (
         // $FlowFixMe
         return sql.raw('$1 IS DISTINCT FROM $2', [sql.identifier([normalizeIdentifier(key)]), value]);
       }),
-    'OR'
+    'OR',
   );
 
   if (booleanExpressionValues) {
@@ -44,10 +45,10 @@ export default async (
               // $FlowFixMe
               return sql.comparisonPredicate(sql.identifier([key]), '=', value);
             }),
-          'AND'
+          'AND',
         ),
       ],
-      'AND'
+      'AND',
     );
   }
 

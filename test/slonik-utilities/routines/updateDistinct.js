@@ -26,7 +26,7 @@ test('executes UPDATE query without WHERE condition (single column)', async (t) 
     'foo',
     {
       bar: 'baz',
-    }
+    },
   );
 
   t.is(connection.query.callCount, 1);
@@ -48,7 +48,7 @@ test('executes UPDATE query without WHERE condition (multiple columns)', async (
       bar0: 'baz0',
       bar1: 'baz1',
       bar2: 'baz2',
-    }
+    },
   );
 
   t.is(connection.query.callCount, 1);
@@ -74,7 +74,7 @@ test('executes UPDATE query without WHERE condition (SQL token)', async (t) => {
       bar0: 'baz0',
       bar1: sql.raw('to_timestamp($1)', ['baz1']),
       bar2: 'baz2',
-    }
+    },
   );
 
   t.is(connection.query.callCount, 1);
@@ -101,7 +101,7 @@ test('executes UPDATE query with WHERE condition (AND boolean expression short-h
     },
     {
       qux: 'quux',
-    }
+    },
   );
 
   t.is(connection.query.callCount, 1);

@@ -19,34 +19,34 @@
     ]
   },
   "dependencies": {
-    "core-js": "^3.2.0",
+    "core-js": "^3.3.6",
     "delay": "^4.3.0",
     "es6-error": "^4.1.1",
     "lodash": "^4.17.15",
-    "roarr": "^2.13.3",
-    "serialize-error": "^4.1.0",
-    "slonik": "^18.10.0"
+    "roarr": "^2.14.3",
+    "serialize-error": "^5.0.0",
+    "slonik": "^19.7.0"
   },
   "description": "Utilities for manipulating data in PostgreSQL database using Slonik.",
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
-    "@babel/plugin-transform-flow-strip-types": "^7.4.4",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/register": "^7.5.5",
-    "ava": "^2.2.0",
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/plugin-transform-flow-strip-types": "^7.6.3",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/register": "^7.6.2",
+    "ava": "^2.4.0",
     "babel-plugin-istanbul": "^5.2.0",
     "babel-plugin-transform-export-default-name": "^2.0.4",
-    "coveralls": "^3.0.6",
-    "eslint": "^6.1.0",
-    "eslint-config-canonical": "^17.3.4",
-    "flow-bin": "^0.105.1",
-    "flow-copy-source": "^2.0.7",
-    "gitdown": "^3.1.1",
-    "husky": "^3.0.3",
+    "coveralls": "^3.0.7",
+    "eslint": "^6.6.0",
+    "eslint-config-canonical": "^17.8.0",
+    "flow-bin": "^0.111.1",
+    "flow-copy-source": "^2.0.8",
+    "gitdown": "^3.1.2",
+    "husky": "^3.0.9",
     "nyc": "^14.1.1",
-    "semantic-release": "^15.13.19",
-    "sinon": "^7.4.1"
+    "semantic-release": "^15.13.30",
+    "sinon": "^7.5.0"
   },
   "engines": {
     "node": ">=8.0"
