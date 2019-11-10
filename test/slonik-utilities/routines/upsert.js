@@ -83,7 +83,7 @@ test('executes INSERT .. DO UPDATE if SELECT returns NULL and update column name
 
   t.is(connection.query.callCount, 2);
 
-  t.is(normalizeQuery(connection.query.secondCall.args[0].sql), 'INSERT INTO "foo" ("bar", "qux") VALUES ($1, $2) ON CONFLICT ("bar") DO UPDATE SET "qux" = "EXCLUDED"."qux" RETURNING "id"');
+  t.is(normalizeQuery(connection.query.secondCall.args[0].sql), 'INSERT INTO "foo" ("bar", "qux") VALUES ($1, $2) ON CONFLICT ("bar") DO UPDATE SET "qux" = "excluded"."qux" RETURNING "id"');
   t.deepEqual(connection.query.secondCall.args[0].values, [
     'baz',
     'quux',
@@ -196,7 +196,7 @@ test('converts named value bindings to snake case (INSERT)', async (t) => {
 
   t.is(connection.query.callCount, 2);
 
-  t.is(normalizeQuery(connection.query.secondCall.args[0].sql), 'INSERT INTO "foo" ("bar_baz", "qux_quux") VALUES ($1, $2) ON CONFLICT ("bar_baz") DO UPDATE SET "qux_quux" = "EXCLUDED"."qux_quux" RETURNING "id"');
+  t.is(normalizeQuery(connection.query.secondCall.args[0].sql), 'INSERT INTO "foo" ("bar_baz", "qux_quux") VALUES ($1, $2) ON CONFLICT ("bar_baz") DO UPDATE SET "qux_quux" = "excluded"."qux_quux" RETURNING "id"');
   t.deepEqual(connection.query.secondCall.args[0].values, [
     'baz',
     'quux',

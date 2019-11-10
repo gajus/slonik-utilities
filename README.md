@@ -338,8 +338,8 @@ INSERT INTO "user" ("email_address", "family_name", "given_name")
 VALUES ($1, $2, $3)
 ON CONFLICT ("email_address")
 DO UPDATE SET
-  "family_name" = EXCLUDED."family_name",
-  "given_name" = EXCLUDED."given_name"
+  "family_name" = "excluded"."family_name",
+  "given_name" = "excluded"."given_name"
 RETURNING "id"
 
 ```

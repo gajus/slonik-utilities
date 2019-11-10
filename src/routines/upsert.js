@@ -104,7 +104,7 @@ export default async (
     updateClause = sql.join(
       updateColumnNames
         .map((updateColumnName) => {
-          return sql`${sql.identifier([updateColumnName])} = ${sql.identifier(['EXCLUDED', updateColumnName])}`;
+          return sql`${sql.identifier([updateColumnName])} = ${sql.identifier(['excluded', updateColumnName])}`;
         }),
       sql`, `,
     );
