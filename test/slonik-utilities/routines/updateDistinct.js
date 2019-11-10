@@ -90,7 +90,7 @@ test('executes UPDATE query without WHERE condition (SQL token)', async (t) => {
     'foo',
     {
       bar0: 'baz0',
-      bar1: sql.raw('to_timestamp($1)', ['baz1']),
+      bar1: sql`to_timestamp(${'baz1'})`,
       bar2: 'baz2',
     },
   );
