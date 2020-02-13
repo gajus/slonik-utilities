@@ -58,7 +58,9 @@ test('throws an error if named value binding value is undefined', async (t) => {
         'bar',
       ],
     );
-  }, 'Named value binding values must be defined.');
+  }, {
+    message: 'Named value binding values must be defined.',
+  });
 });
 
 test('executes INSERT .. DO UPDATE if SELECT returns NULL and update column names are defined', async (t) => {
@@ -212,7 +214,9 @@ test('throws if named value bindings object does not have properties', async (t)
       'foo',
       {},
     );
-  }, 'Named value bindings object must have properties.');
+  }, {
+    message: 'Named value bindings object must have properties.',
+  });
 });
 
 test('throws if unique contraint column names contain values not present in named value bindings', async (t) => {
@@ -229,5 +233,7 @@ test('throws if unique contraint column names contain values not present in name
         'qux',
       ],
     );
-  }, 'Unique constraint column names must not contain column names not present in named value bindings.');
+  }, {
+    message: 'Unique constraint column names must not contain column names not present in named value bindings.',
+  });
 });
