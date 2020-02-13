@@ -5,48 +5,48 @@
     "url": "http://gajus.com"
   },
   "ava": {
+    "babel": {
+      "compileAsTests": [
+        "test/helpers/**/*"
+      ]
+    },
     "files": [
-      "test/**/*"
-    ],
-    "helpers": [
-      "test/helpers/**/*"
+      "test/slonik-utilities/**/*"
     ],
     "require": [
       "@babel/register"
-    ],
-    "sources": [
-      "src/**/*"
     ]
   },
   "dependencies": {
-    "core-js": "^3.4.0",
+    "core-js": "^3.6.4",
     "delay": "^4.3.0",
     "es6-error": "^4.1.1",
     "lodash": "^4.17.15",
-    "roarr": "^2.14.4",
+    "roarr": "^2.15.2",
     "serialize-error": "^5.0.0",
-    "slonik": "^21.2.0"
+    "slonik": "^22.4.2"
   },
   "description": "Utilities for manipulating data in PostgreSQL database using Slonik.",
   "devDependencies": {
-    "@babel/cli": "^7.7.0",
-    "@babel/core": "^7.7.2",
-    "@babel/plugin-transform-flow-strip-types": "^7.6.3",
-    "@babel/preset-env": "^7.7.1",
-    "@babel/register": "^7.7.0",
-    "ava": "^2.4.0",
-    "babel-plugin-istanbul": "^5.2.0",
+    "@ava/babel": "^1.0.1",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-transform-flow-strip-types": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/register": "^7.8.3",
+    "ava": "^3.3.0",
+    "babel-plugin-istanbul": "^6.0.0",
     "babel-plugin-transform-export-default-name": "^2.0.4",
-    "coveralls": "^3.0.7",
-    "eslint": "^6.6.0",
-    "eslint-config-canonical": "^17.8.0",
-    "flow-bin": "^0.111.3",
-    "flow-copy-source": "^2.0.8",
+    "coveralls": "^3.0.9",
+    "eslint": "^6.8.0",
+    "eslint-config-canonical": "^18.1.1",
+    "flow-bin": "^0.118.0",
+    "flow-copy-source": "^2.0.9",
     "gitdown": "^3.1.2",
-    "husky": "^3.0.9",
-    "nyc": "^14.1.1",
-    "semantic-release": "^15.13.30",
-    "sinon": "^7.5.0"
+    "husky": "^4.2.3",
+    "nyc": "^15.0.0",
+    "semantic-release": "^17.0.3",
+    "sinon": "^8.1.1"
   },
   "engines": {
     "node": ">=8.0"
