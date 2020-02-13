@@ -17,7 +17,7 @@ import Logger from '../Logger';
 
 type NamedValueBindingsType = {
   +[key: string]: ValueExpressionType,
-  ...,
+  ...
 };
 
 type UpsertConfigurationType = {|

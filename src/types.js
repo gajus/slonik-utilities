@@ -6,5 +6,5 @@ import type {
 
 export type NamedAssignmentPayloadType = {
   [key: string]: ValueExpressionType,
-  ...,
+  ...
 };
