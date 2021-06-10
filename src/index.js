@@ -5,3 +5,8 @@ export {
   updateDistinct,
   upsert,
 } from './routines';
+export {
+  assignmentList,
+  escapeIdentifier,
+  normalizeIdentifier,
+} from './utilities';
