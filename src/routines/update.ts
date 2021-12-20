@@ -10,7 +10,7 @@ import type {
   DatabaseConnectionType,
 } from 'slonik';
 import type {
-  NamedAssignmentPayloadType,
+  NamedAssignmentPayload,
 } from '../types';
 import {
   assignmentList,
@@ -24,7 +24,7 @@ type UpdateResultType = {
 export const update = async (
   connection: DatabaseConnectionType,
   tableName: string,
-  namedAssignmentPayload: NamedAssignmentPayloadType,
+  namedAssignmentPayload: NamedAssignmentPayload,
   booleanExpressionValues: Record<string, boolean | number | string | null> = {},
 ): Promise<UpdateResultType> => {
   if (Object.keys(booleanExpressionValues).length) {

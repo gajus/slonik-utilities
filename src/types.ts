@@ -2,6 +2,6 @@ import type {
   ValueExpressionType,
 } from 'slonik';
 
-export type NamedAssignmentPayloadType = {
+export type NamedAssignmentPayload = {
   [key: string]: ValueExpressionType,
 };

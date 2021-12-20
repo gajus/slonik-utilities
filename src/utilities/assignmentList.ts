@@ -5,14 +5,14 @@ import type {
   ListSqlTokenType,
 } from 'slonik';
 import type {
-  NamedAssignmentPayloadType,
+  NamedAssignmentPayload,
 } from '../types';
 import {
   normalizeIdentifier,
 } from './normalizeIdentifier';
 
 export const assignmentList = (
-  namedAssignment: NamedAssignmentPayloadType,
+  namedAssignment: NamedAssignmentPayload,
 ): ListSqlTokenType => {
   const values = Object.values(
     Object.entries(namedAssignment).map(([

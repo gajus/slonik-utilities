@@ -5,7 +5,7 @@ import type {
   DatabaseConnectionType,
 } from 'slonik';
 import type {
-  NamedAssignmentPayloadType,
+  NamedAssignmentPayload,
 } from '../types';
 import {
   assignmentList,
@@ -19,7 +19,7 @@ type UpdateDistinctResultType = {
 export const updateDistinct = async (
   connection: DatabaseConnectionType,
   tableName: string,
-  namedAssignmentPayload: NamedAssignmentPayloadType,
+  namedAssignmentPayload: NamedAssignmentPayload,
   booleanExpressionValues: Record<string, boolean | number | string | null> = {},
 ): Promise<UpdateDistinctResultType> => {
   let booleanExpression = sql.join(
