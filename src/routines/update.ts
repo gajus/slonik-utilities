@@ -1,4 +1,4 @@
-// @flow
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import {
   pickBy,
@@ -9,30 +9,31 @@ import {
 import type {
   DatabaseConnectionType,
 } from 'slonik';
+import type {
+  NamedAssignmentPayloadType,
+} from '../types';
 import {
   assignmentList,
   normalizeIdentifier,
 } from '../utilities';
-import type {
-  NamedAssignmentPayloadType,
-} from '../types';
 
-type UpdateResultType = {|
-  +rowCount: number,
-|};
+type UpdateResultType = {
+  readonly rowCount: number,
+};
 
-export default async (
+export const update = async (
   connection: DatabaseConnectionType,
   tableName: string,
   namedAssignmentPayload: NamedAssignmentPayloadType,
-
-  // eslint-disable-next-line flowtype/no-weak-types
-  booleanExpressionValues: Object = null,
+  booleanExpressionValues: Record<string, boolean | number | string | null> = {},
 ): Promise<UpdateResultType> => {
-  if (booleanExpressionValues) {
-    const nonOverlappingNamedAssignmentBindings = pickBy(namedAssignmentPayload, (value, key) => {
-      return value !== booleanExpressionValues[key];
-    });
+  if (Object.keys(booleanExpressionValues).length) {
+    const nonOverlappingNamedAssignmentBindings = pickBy(
+      namedAssignmentPayload,
+      (value, key) => {
+        return value !== booleanExpressionValues[key];
+      },
+    );
 
     if (Object.keys(nonOverlappingNamedAssignmentBindings).length === 0) {
       return {
@@ -41,17 +42,21 @@ export default async (
     }
 
     const booleanExpression = sql.join(
-      Object
-        .entries(booleanExpressionValues)
-        .map(([key, value]) => {
-          // $FlowFixMe
-          return sql`${sql.identifier([normalizeIdentifier(key)])} = ${value}`;
-        }),
+      Object.entries(booleanExpressionValues).map(([
+        key,
+        value,
+      ]) => {
+        return sql`${sql.identifier([
+          normalizeIdentifier(key),
+        ])} = ${value as any}`;
+      }),
       sql` AND `,
     );
 
     const result = await connection.query(sql`
-      UPDATE ${sql.identifier([tableName])}
+      UPDATE ${sql.identifier([
+    tableName,
+  ])}
       SET ${assignmentList(nonOverlappingNamedAssignmentBindings)}
       WHERE ${booleanExpression}
     `);
@@ -67,7 +72,9 @@ export default async (
     }
 
     const result = await connection.query(sql`
-      UPDATE ${sql.identifier([tableName])}
+      UPDATE ${sql.identifier([
+    tableName,
+  ])}
       SET ${assignmentList(namedAssignmentPayload)}
     `);
 

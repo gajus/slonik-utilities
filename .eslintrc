@@ -1,18 +1,11 @@
 {
   "extends": [
     "canonical",
-    "canonical/flowtype"
+    "canonical/node",
+    "canonical/typescript"
   ],
-  "root": true,
-  "rules": {
-    "no-continue": 0,
-    "no-duplicate-imports": 0,
-    "no-restricted-syntax": 0,
-    "no-unused-expressions": [
-      2,
-      {
-        "allowTaggedTemplates": true
-      }
-    ]
-  }
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "root": true
 }
