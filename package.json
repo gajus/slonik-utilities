@@ -20,7 +20,7 @@
     "delay": "^4.3.0",
     "es6-error": "^4.1.1",
     "lodash": "^4.17.21",
-    "roarr": "^7.8.0",
+    "roarr": "^7.11.0",
     "serialize-error": "^5.0.0"
   },
   "description": "Utilities for manipulating data in PostgreSQL database using Slonik.",
