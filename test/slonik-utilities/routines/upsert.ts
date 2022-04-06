@@ -180,6 +180,40 @@ test('uses unique constraint column name values and update column name values to
   ]);
 });
 
+test('skips initial SELECT if selectBeforeUpdate is false and update column names are defined', async (t) => {
+  const connection = createConnection();
+
+  connection.query.onCall(0).returns(1);
+
+  const recordId = await upsert(
+    connection,
+    'foo',
+    {
+      bar: 'baz',
+      qux: 'quux',
+    },
+    [
+      'bar',
+    ],
+    {
+      selectBeforeUpdate: false,
+    },
+  );
+
+  t.is(recordId, 1);
+
+  t.is(connection.query.callCount, 1);
+
+  t.is(
+    normalizeQuery(connection.query.firstCall.args[0].sql),
+    'INSERT INTO "foo" ("bar", "qux") VALUES ($1, $2) ON CONFLICT ("bar") DO UPDATE SET "qux" = "excluded"."qux" RETURNING "id"',
+  );
+  t.deepEqual(connection.query.firstCall.args[0].values, [
+    'baz',
+    'quux',
+  ]);
+});
+
 test('converts named value bindings to snake case (SELECT)', async (t) => {
   const connection = createConnection();
 

@@ -20,7 +20,8 @@ type NamedValueBindingsType = {
 };
 
 type UpsertConfigurationType = {
-  readonly identifierName: string,
+  readonly identifierName?: string,
+  readonly selectBeforeUpdate?: boolean,
 };
 
 const log = Logger.child({
@@ -31,8 +32,9 @@ const normalizeNamedValueBindingName = (name: string): string => {
   return snakeCase(name);
 };
 
-const defaultConfiguration = {
+const defaultConfiguration: Required<UpsertConfigurationType> = {
   identifierName: 'id',
+  selectBeforeUpdate: true,
 };
 
 export const upsert = async (
@@ -163,13 +165,12 @@ export const upsert = async (
     WHERE
       ${whereClause}
   `;
+  if (configuration.selectBeforeUpdate) {
+    const maybeId1 = await connection.maybeOneFirst(selectQuery);
 
-  let maybeId;
-
-  maybeId = await connection.maybeOneFirst(selectQuery);
-
-  if (maybeId) {
-    return maybeId;
+    if (maybeId1) {
+      return maybeId1;
+    }
   }
 
   if (updateClause) {
@@ -188,7 +189,7 @@ export const upsert = async (
     `);
   }
 
-  maybeId = await connection.maybeOneFirst(sql`
+  const maybeId2 = await connection.maybeOneFirst(sql`
     INSERT INTO ${sql.identifier([
     tableName,
   ])} (${columnIdentifiers})
@@ -197,8 +198,8 @@ export const upsert = async (
     DO NOTHING
   `);
 
-  if (maybeId) {
-    return maybeId;
+  if (maybeId2) {
+    return maybeId2;
   }
 
   return await connection.oneFirst(selectQuery);

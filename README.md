@@ -236,7 +236,7 @@ upsert(
 
 Behaviour:
 
-If `user` table already contains a record describing the input email, then the following query will be evaluted:
+If `user` table already contains a record describing the input email, then the following query will be evaluated:
 
 ```sql
 SELECT "id"
@@ -250,6 +250,7 @@ WHERE (
 If `user` table does not contain a record describing the input email, then the following queries will be evaluated:
 
 ```sql
+-- This initial query is skipped if `selectBeforeInsert: false` is set on options (defaults to true).
 SELECT "id"
 FROM "user"
 WHERE (
@@ -262,7 +263,7 @@ ON CONFLICT ("email_address")
 DO NOTHING
 RETURNING "id";
 
--- This query will not be evaluted if the preceeding query returns result.
+-- This query will not be evaluated if the preceding query returns result.
 SELECT "id"
 FROM "user"
 WHERE (
@@ -310,7 +311,8 @@ upsert(
 
 Behaviour:
 
-If `user` table already contains a record describing the input email, then the following query will be evaluted:
+If `user` table already contains a record describing the input email and `selectBeforeUpdate: true` (the default), 
+then the following query will be evaluated:
 
 ```sql
 SELECT "id"
@@ -323,7 +325,8 @@ WHERE (
 
 ```
 
-If `user` table does not contain a record describing the input email, then the following queries will be evaluated:
+If `user` table does not contain a record describing the input email or `selectBeforeUpdate: false`, then the following 
+queries will be evaluated:
 
 ```sql
 SELECT "id"
