@@ -1,7 +1,7 @@
 import type {
-  ValueExpressionType,
+  ValueExpression,
 } from 'slonik';
 
 export type NamedAssignmentPayload = {
-  [key: string]: ValueExpressionType,
+  [key: string]: ValueExpression,
 };

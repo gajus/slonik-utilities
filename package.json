@@ -36,11 +36,11 @@
     "nyc": "^15.1.0",
     "semantic-release": "^19.0.3",
     "sinon": "^12.0.1",
-    "slonik": "^26.2.2",
+    "slonik": "^28.1.1",
     "ts-node": "^10.4.0"
   },
   "peerDependencies": {
-    "slonik": "*"
+    "slonik": "^28.*"
   },
   "engines": {
     "node": ">=8.0"
