@@ -2,7 +2,7 @@ import {
   sql,
 } from 'slonik';
 import type {
-  ListSqlTokenType,
+  ListSqlToken,
 } from 'slonik';
 import type {
   NamedAssignmentPayload,
@@ -13,7 +13,7 @@ import {
 
 export const assignmentList = (
   namedAssignment: NamedAssignmentPayload,
-): ListSqlTokenType => {
+): ListSqlToken => {
   const values = Object.values(
     Object.entries(namedAssignment).map(([
       column,

@@ -1,7 +1,10 @@
 language: node_js
+dist: focal
 node_js:
   - node
-  - 14
+  - lts/*
+before_install:
+  - npm install -g typescript
 script:
   - npm run build
   - npm run test

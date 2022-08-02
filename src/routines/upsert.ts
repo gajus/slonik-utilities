@@ -8,15 +8,15 @@ import {
   sql,
 } from 'slonik';
 import type {
-  DatabaseConnectionType,
-  ValueExpressionType,
+  DatabaseConnection,
+  ValueExpression,
 } from 'slonik';
 import {
   Logger,
 } from '../Logger';
 
 type NamedValueBindingsType = {
-  readonly [key: string]: ValueExpressionType,
+  readonly [key: string]: ValueExpression,
 };
 
 type UpsertConfigurationType = {
@@ -36,7 +36,7 @@ const defaultConfiguration = {
 };
 
 export const upsert = async (
-  connection: DatabaseConnectionType,
+  connection: DatabaseConnection,
   tableName: string,
   namedValueBindings: NamedValueBindingsType,
   inputUniqueConstraintColumnNames: readonly string[] | null = null,

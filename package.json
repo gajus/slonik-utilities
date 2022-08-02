@@ -27,20 +27,20 @@
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@types/sinon": "^10.0.6",
-    "ava": "^3.15.0",
+    "ava": "^4.3.1",
     "coveralls": "^3.1.1",
     "eslint": "^8.5.0",
     "eslint-config-canonical": "^32.48.8",
-    "gitdown": "^3.1.4",
+    "gitdown": "^3.1.5",
     "husky": "^4.2.3",
     "nyc": "^15.1.0",
-    "semantic-release": "^18.0.1",
+    "semantic-release": "^19.0.3",
     "sinon": "^12.0.1",
-    "slonik": "^26.2.2",
+    "slonik": "^28.1.1",
     "ts-node": "^10.4.0"
   },
   "peerDependencies": {
-    "slonik": "*"
+    "slonik": "^28.*"
   },
   "engines": {
     "node": ">=8.0"
