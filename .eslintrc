@@ -1,4 +1,5 @@
 {
+  "ignorePatterns": "package-lock.json",
   "extends": [
     "canonical",
     "canonical/node",
