@@ -8,7 +8,7 @@ import {
   sql,
 } from 'slonik';
 import type {
-  DatabaseConnection,
+  CommonQueryMethods,
   ValueExpression,
 } from 'slonik';
 import {
@@ -36,7 +36,7 @@ const defaultConfiguration = {
 };
 
 export const upsert = async (
-  connection: DatabaseConnection,
+  connection: CommonQueryMethods,
   tableName: string,
   namedValueBindings: NamedValueBindingsType,
   inputUniqueConstraintColumnNames: readonly string[] | null = null,

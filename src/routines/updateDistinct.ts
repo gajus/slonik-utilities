@@ -2,7 +2,7 @@ import {
   sql,
 } from 'slonik';
 import type {
-  DatabaseConnection,
+  CommonQueryMethods,
 } from 'slonik';
 import type {
   NamedAssignmentPayload,
@@ -17,7 +17,7 @@ type UpdateDistinctResultType = {
 };
 
 export const updateDistinct = async (
-  connection: DatabaseConnection,
+  connection: CommonQueryMethods,
   tableName: string,
   namedAssignmentPayload: NamedAssignmentPayload,
   booleanExpressionValues: Record<string, boolean | number | string | null> = {},
