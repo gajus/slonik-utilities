@@ -26,6 +26,9 @@
   "description": "Utilities for manipulating data in PostgreSQL database using Slonik.",
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/github": "^8.0.5",
+    "@semantic-release/npm": "^9.0.1",
     "@types/sinon": "^10.0.6",
     "ava": "^4.3.1",
     "coveralls": "^3.1.1",
