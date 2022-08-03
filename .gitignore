@@ -10,4 +10,5 @@ node_modules
 !.npmignore
 !.nycrc
 !.README
+!.releaserc
 !.travis.yml
