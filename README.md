@@ -1,7 +1,7 @@
+<a name="user-content-slonik-utilities"></a>
 <a name="slonik-utilities"></a>
 # Slonik Utilities
 
-[![Travis build status](http://img.shields.io/travis/gajus/slonik-utilities/master.svg?style=flat-square)](https://travis-ci.org/gajus/slonik-utilities)
 [![Coveralls](https://img.shields.io/coveralls/gajus/slonik-utilities.svg?style=flat-square)](https://coveralls.io/github/gajus/slonik-utilities)
 [![NPM version](http://img.shields.io/npm/v/slonik-utilities.svg?style=flat-square)](https://www.npmjs.org/package/slonik-utilities)
 [![Canonical Code Style](https://img.shields.io/badge/code%20style-canonical-blue.svg?style=flat-square)](https://github.com/gajus/canonical)
@@ -9,20 +9,23 @@
 
 Utilities for manipulating data in PostgreSQL database using [Slonik](https://github.com/gajus/slonik).
 
+<a name="user-content-slonik-utilities-contents"></a>
 <a name="slonik-utilities-contents"></a>
 ## Contents
 
-* [Slonik Utilities](#slonik-utilities)
-    * [Contents](#slonik-utilities-contents)
-    * [Usage](#slonik-utilities-usage)
-        * [`update`](#slonik-utilities-usage-update)
-        * [`updateDistinct`](#slonik-utilities-usage-updatedistinct)
-        * [`upsert`](#slonik-utilities-usage-upsert)
+* [Slonik Utilities](#user-content-slonik-utilities)
+    * [Contents](#user-content-slonik-utilities-contents)
+    * [Usage](#user-content-slonik-utilities-usage)
+        * [`update`](#user-content-slonik-utilities-usage-update)
+        * [`updateDistinct`](#user-content-slonik-utilities-usage-updatedistinct)
+        * [`upsert`](#user-content-slonik-utilities-usage-upsert)
 
 
+<a name="user-content-slonik-utilities-usage"></a>
 <a name="slonik-utilities-usage"></a>
 ## Usage
 
+<a name="user-content-slonik-utilities-usage-update"></a>
 <a name="slonik-utilities-usage-update"></a>
 ### <code>update</code>
 
@@ -44,6 +47,7 @@ update;
 
 Constructs and executes `UPDATE` query.
 
+<a name="user-content-slonik-utilities-usage-update-example-update-all-rows"></a>
 <a name="slonik-utilities-usage-update-example-update-all-rows"></a>
 #### Example: Update all rows
 
@@ -69,6 +73,7 @@ SET
 
 ```
 
+<a name="user-content-slonik-utilities-usage-update-example-update-rows-matching-a-boolean-where-condition"></a>
 <a name="slonik-utilities-usage-update-example-update-rows-matching-a-boolean-where-condition"></a>
 #### Example: Update rows matching a boolean WHERE condition
 
@@ -100,6 +105,7 @@ WHERE
 ```
 
 
+<a name="user-content-slonik-utilities-usage-updatedistinct"></a>
 <a name="slonik-utilities-usage-updatedistinct"></a>
 ### <code>updateDistinct</code>
 
@@ -121,6 +127,7 @@ updateDistinct;
 
 Constructs and executes `UPDATE` query matching only rows with distinct values.
 
+<a name="user-content-slonik-utilities-usage-updatedistinct-example-update-all-rows-1"></a>
 <a name="slonik-utilities-usage-updatedistinct-example-update-all-rows-1"></a>
 #### Example: Update all rows
 
@@ -148,6 +155,7 @@ WHERE
 
 ```
 
+<a name="user-content-slonik-utilities-usage-updatedistinct-example-update-rows-matching-a-boolean-where-condition-1"></a>
 <a name="slonik-utilities-usage-updatedistinct-example-update-rows-matching-a-boolean-where-condition-1"></a>
 #### Example: Update rows matching a boolean WHERE condition
 
@@ -180,6 +188,7 @@ WHERE
 ```
 
 
+<a name="user-content-slonik-utilities-usage-upsert"></a>
 <a name="slonik-utilities-usage-upsert"></a>
 ### <code>upsert</code>
 
@@ -206,6 +215,7 @@ upsert;
 
 Inserts a new record to the database. If there is a conflicting unique constraint, updates the existing row.
 
+<a name="user-content-slonik-utilities-usage-upsert-example-named-value-bindings-equal-to-the-unique-constraint-column-names"></a>
 <a name="slonik-utilities-usage-upsert-example-named-value-bindings-equal-to-the-unique-constraint-column-names"></a>
 #### Example: Named value bindings equal to the unique constraint column names
 
@@ -272,6 +282,7 @@ WHERE (
 ```
 
 
+<a name="user-content-slonik-utilities-usage-upsert-example-named-value-bindings-different-than-the-unique-constraint-column-names"></a>
 <a name="slonik-utilities-usage-upsert-example-named-value-bindings-different-than-the-unique-constraint-column-names"></a>
 #### Example: Named value bindings different than the unique constraint column names
 
@@ -344,6 +355,7 @@ RETURNING "id"
 
 ```
 
+<a name="user-content-slonik-utilities-usage-upsert-example-sql-tags-as-values"></a>
 <a name="slonik-utilities-usage-upsert-example-sql-tags-as-values"></a>
 #### Example: SQL tags as values
 
