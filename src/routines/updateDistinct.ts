@@ -1,11 +1,9 @@
 import {
   sql,
+  type CommonQueryMethods,
 } from 'slonik';
-import type {
-  CommonQueryMethods,
-} from 'slonik';
-import type {
-  NamedAssignmentPayload,
+import {
+  type NamedAssignmentPayload,
 } from '../types';
 import {
   assignmentList,
@@ -27,12 +25,11 @@ export const updateDistinct = async (
       key,
       value,
     ]) => {
-      // $FlowFixMe
-      return sql`${sql.identifier([
+      return sql.fragment`${sql.identifier([
         normalizeIdentifier(key),
       ])} IS DISTINCT FROM ${value}`;
     }),
-    sql` OR `,
+    sql.fragment` OR `,
   );
 
   if (Object.keys(booleanExpressionValues).length) {
@@ -44,19 +41,18 @@ export const updateDistinct = async (
             key,
             value,
           ]) => {
-            // $FlowFixMe
-            return sql`${sql.identifier([
+            return sql.fragment`${sql.identifier([
               normalizeIdentifier(key),
             ])} = ${value}`;
           }),
-          sql` AND `,
+          sql.fragment` AND `,
         ),
       ],
-      sql` AND `,
+      sql.fragment` AND `,
     );
   }
 
-  const result = await connection.query(sql`
+  const result = await connection.query(sql.unsafe`
     UPDATE ${sql.identifier([
     tableName,
   ])}

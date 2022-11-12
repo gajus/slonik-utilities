@@ -1,7 +1,7 @@
 import test from 'ava';
 import * as sinon from 'sinon';
-import type {
-  SinonStubbedInstance,
+import {
+  type SinonStubbedInstance,
 } from 'sinon';
 import {
   sql,
@@ -106,7 +106,7 @@ test('executes UPDATE query without WHERE condition (SQL token)', async (t) => {
 
   await update(connection, 'foo', {
     bar0: 'baz0',
-    bar1: sql`to_timestamp(${'baz1'})`,
+    bar1: sql.fragment`to_timestamp(${'baz1'})`,
     bar2: 'baz2',
   });
 

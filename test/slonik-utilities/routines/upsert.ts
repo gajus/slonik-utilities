@@ -1,7 +1,7 @@
 import test from 'ava';
 import * as sinon from 'sinon';
-import type {
-  SinonStubbedInstance,
+import {
+  type SinonStubbedInstance,
 } from 'sinon';
 import {
   upsert,

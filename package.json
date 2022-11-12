@@ -20,7 +20,7 @@
     "delay": "^4.3.0",
     "es6-error": "^4.1.1",
     "lodash": "^4.17.21",
-    "roarr": "^7.11.0",
+    "roarr": "^7.14.0",
     "serialize-error": "^5.0.0"
   },
   "description": "Utilities for manipulating data in PostgreSQL database using Slonik.",
@@ -32,14 +32,14 @@
     "@types/sinon": "^10.0.6",
     "ava": "^4.3.1",
     "coveralls": "^3.1.1",
-    "eslint": "^8.5.0",
-    "eslint-config-canonical": "^32.48.8",
+    "eslint": "^8.27.0",
+    "eslint-config-canonical": "^37.0.3",
     "gitdown": "^3.1.5",
     "husky": "^4.2.3",
     "nyc": "^15.1.0",
     "semantic-release": "^19.0.3",
     "sinon": "^12.0.1",
-    "slonik": "^28.1.1",
+    "slonik": "^33.0.2",
     "ts-node": "^10.4.0"
   },
   "peerDependencies": {

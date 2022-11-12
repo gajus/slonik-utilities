@@ -1,11 +1,10 @@
 import {
   sql,
+
+  type ListSqlToken,
 } from 'slonik';
-import type {
-  ListSqlToken,
-} from 'slonik';
-import type {
-  NamedAssignmentPayload,
+import {
+  type NamedAssignmentPayload,
 } from '../types';
 import {
   normalizeIdentifier,
@@ -19,13 +18,11 @@ export const assignmentList = (
       column,
       value,
     ]) => {
-      // $FlowFixMe
-      return sql`${sql.identifier([
+      return sql.fragment`${sql.identifier([
         normalizeIdentifier(column),
       ])} = ${value}`;
     }),
   );
 
-  // $FlowFixMe
-  return sql.join(values, sql`, `);
+  return sql.join(values, sql.fragment`, `);
 };

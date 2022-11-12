@@ -1,5 +1,5 @@
-import type {
-  ValueExpression,
+import {
+  type ValueExpression,
 } from 'slonik';
 
 export type NamedAssignmentPayload = {

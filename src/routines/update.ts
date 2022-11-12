@@ -5,12 +5,11 @@ import {
 } from 'lodash';
 import {
   sql,
+
+  type CommonQueryMethods,
 } from 'slonik';
-import type {
-  CommonQueryMethods,
-} from 'slonik';
-import type {
-  NamedAssignmentPayload,
+import {
+  type NamedAssignmentPayload,
 } from '../types';
 import {
   assignmentList,
@@ -46,14 +45,14 @@ export const update = async (
         key,
         value,
       ]) => {
-        return sql`${sql.identifier([
+        return sql.fragment`${sql.identifier([
           normalizeIdentifier(key),
         ])} = ${value as any}`;
       }),
-      sql` AND `,
+      sql.fragment` AND `,
     );
 
-    const result = await connection.query(sql`
+    const result = await connection.query(sql.unsafe`
       UPDATE ${sql.identifier([
     tableName,
   ])}
@@ -71,7 +70,7 @@ export const update = async (
       };
     }
 
-    const result = await connection.query(sql`
+    const result = await connection.query(sql.unsafe`
       UPDATE ${sql.identifier([
     tableName,
   ])}

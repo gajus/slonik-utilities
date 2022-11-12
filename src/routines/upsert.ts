@@ -6,10 +6,9 @@ import {
 } from 'lodash';
 import {
   sql,
-} from 'slonik';
-import type {
-  CommonQueryMethods,
-  ValueExpression,
+
+  type CommonQueryMethods,
+  type ValueExpression,
 } from 'slonik';
 import {
   Logger,
@@ -100,7 +99,7 @@ export const upsert = async (
         columnName,
       ]);
     }),
-    sql`, `,
+    sql.fragment`, `,
   );
 
   const conflictColumnIdentifiers = sql.join(
@@ -109,7 +108,7 @@ export const upsert = async (
         uniqueConstraintColumnName,
       ]);
     }),
-    sql`, `,
+    sql.fragment`, `,
   );
 
   let updateClause;
@@ -117,14 +116,14 @@ export const upsert = async (
   if (updateColumnNames.length) {
     updateClause = sql.join(
       updateColumnNames.map((updateColumnName) => {
-        return sql`${sql.identifier([
+        return sql.fragment`${sql.identifier([
           updateColumnName,
         ])} = ${sql.identifier([
           'excluded',
           updateColumnName,
         ])}`;
       }),
-      sql`, `,
+      sql.fragment`, `,
     );
   }
 
@@ -141,19 +140,19 @@ export const upsert = async (
         ];
 
       if (value === null) {
-        return sql`${sql.identifier([
+        return sql.fragment`${sql.identifier([
           targetColumnName,
         ])} IS NULL`;
       }
 
-      return sql`${sql.identifier([
+      return sql.fragment`${sql.identifier([
         targetColumnName,
       ])} = ${value}`;
     }),
-    sql` AND `,
+    sql.fragment` AND `,
   );
 
-  const selectQuery = sql`
+  const selectQuery = sql.unsafe`
     SELECT ${sql.identifier([
     configuration.identifierName,
   ])}
@@ -173,11 +172,11 @@ export const upsert = async (
   }
 
   if (updateClause) {
-    return await connection.oneFirst(sql`
+    return await connection.oneFirst(sql.unsafe`
       INSERT INTO ${sql.identifier([
     tableName,
   ])} (${columnIdentifiers})
-      VALUES (${sql.join(boundValues, sql`, `)})
+      VALUES (${sql.join(boundValues, sql.fragment`, `)})
       ON CONFLICT (${conflictColumnIdentifiers})
       DO UPDATE
       SET
@@ -188,11 +187,11 @@ export const upsert = async (
     `);
   }
 
-  maybeId = await connection.maybeOneFirst(sql`
+  maybeId = await connection.maybeOneFirst(sql.unsafe`
     INSERT INTO ${sql.identifier([
     tableName,
   ])} (${columnIdentifiers})
-    VALUES (${sql.join(boundValues, sql`, `)})
+    VALUES (${sql.join(boundValues, sql.fragment`, `)})
     ON CONFLICT (${conflictColumnIdentifiers})
     DO NOTHING
   `);
