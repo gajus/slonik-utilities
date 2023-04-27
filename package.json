@@ -43,7 +43,7 @@
     "ts-node": "^10.4.0"
   },
   "peerDependencies": {
-    "slonik": "^28 | ^29"
+    "slonik": ">28"
   },
   "engines": {
     "node": ">=8.0"
