@@ -25,6 +25,7 @@ export const update = async (
   tableName: string,
   namedAssignmentPayload: NamedAssignmentPayload,
   booleanExpressionValues: Record<string, boolean | number | string | null> = {},
+  identifierNormalizer: (identifierName: string) => string = normalizeIdentifier,
 ): Promise<UpdateResultType> => {
   if (Object.keys(booleanExpressionValues).length) {
     const nonOverlappingNamedAssignmentBindings = pickBy(
@@ -46,7 +47,7 @@ export const update = async (
         value,
       ]) => {
         return sql.fragment`${sql.identifier([
-          normalizeIdentifier(key),
+          identifierNormalizer(key),
         ])} = ${value as any}`;
       }),
       sql.fragment` AND `,

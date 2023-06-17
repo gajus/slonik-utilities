@@ -2,7 +2,6 @@ import {
   difference,
   uniq,
   mapKeys,
-  snakeCase,
 } from 'lodash';
 import {
   sql,
@@ -13,6 +12,9 @@ import {
 import {
   Logger,
 } from '../Logger';
+import {
+  normalizeIdentifier,
+} from '../utilities';
 
 type NamedValueBindingsType = {
   readonly [key: string]: ValueExpression,
@@ -26,10 +28,6 @@ const log = Logger.child({
   namespace: 'upsert',
 });
 
-const normalizeNamedValueBindingName = (name: string): string => {
-  return snakeCase(name);
-};
-
 const defaultConfiguration = {
   identifierName: 'id',
 };
@@ -40,6 +38,7 @@ export const upsert = async (
   namedValueBindings: NamedValueBindingsType,
   inputUniqueConstraintColumnNames: readonly string[] | null = null,
   inputConfiguration: UpsertConfigurationType | null = null,
+  identifierNormalizer: (identifierName: string) => string = normalizeIdentifier,
 ) => {
   const configuration = {
     ...defaultConfiguration,
@@ -58,7 +57,7 @@ export const upsert = async (
 
       boundValues.push(value);
 
-      return normalizeNamedValueBindingName(key);
+      return identifierNormalizer(key);
     },
   );
 
@@ -136,7 +135,7 @@ export const upsert = async (
     targetColumnNames.map((targetColumnName) => {
       const value =
         normalizedNamedValueBindings[
-          normalizeNamedValueBindingName(targetColumnName)
+          identifierNormalizer(targetColumnName)
         ];
 
       if (value === null) {
