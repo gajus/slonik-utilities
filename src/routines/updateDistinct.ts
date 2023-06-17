@@ -19,6 +19,7 @@ export const updateDistinct = async (
   tableName: string,
   namedAssignmentPayload: NamedAssignmentPayload,
   booleanExpressionValues: Record<string, boolean | number | string | null> = {},
+  identifierNormalizer: (identifierName: string) => string = normalizeIdentifier,
 ): Promise<UpdateDistinctResultType> => {
   let booleanExpression = sql.join(
     Object.entries(namedAssignmentPayload).map(([
@@ -26,7 +27,7 @@ export const updateDistinct = async (
       value,
     ]) => {
       return sql.fragment`${sql.identifier([
-        normalizeIdentifier(key),
+        identifierNormalizer(key),
       ])} IS DISTINCT FROM ${value}`;
     }),
     sql.fragment` OR `,
@@ -42,7 +43,7 @@ export const updateDistinct = async (
             value,
           ]) => {
             return sql.fragment`${sql.identifier([
-              normalizeIdentifier(key),
+              identifierNormalizer(key),
             ])} = ${value}`;
           }),
           sql.fragment` AND `,
